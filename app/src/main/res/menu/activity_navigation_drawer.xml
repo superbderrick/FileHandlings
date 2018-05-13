@@ -6,13 +6,22 @@
     <item android:title="VideoPlayer">
         <menu>
             <item
-                android:id="@+id/defaultMediaPlayer"
+                android:id="@+id/androidMediaPlayer_Video"
                 android:icon="@drawable/ic_local_movies_black_24dp"
                 android:title="Android MediaPlayer" />
             <item
                 android:id="@+id/exoPlayer"
                 android:icon="@drawable/ic_local_movies_black_24dp"
                 android:title="ExoPlayer" />
+        </menu>
+    </item>
+
+    <item android:title="AudioPlayer">
+        <menu>
+            <item
+                android:id="@+id/androidMediaPlayer_Audio"
+                android:icon="@drawable/ic_audiotrack_black_24dp"
+                android:title="Android MediaPlayer" />
         </menu>
     </item>
 
