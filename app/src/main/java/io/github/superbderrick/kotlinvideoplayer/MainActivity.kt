@@ -19,9 +19,9 @@ import android.widget.ScrollView
 
 
 
-class NavigationActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
-    private val LOG_TAG: String = "NavigationActivity"
+    private val LOG_TAG: String = "MainActivity"
     //Locate Playback mp3 file
     private val MEDIA_RES_ID: Int = R.raw.dfff
 
