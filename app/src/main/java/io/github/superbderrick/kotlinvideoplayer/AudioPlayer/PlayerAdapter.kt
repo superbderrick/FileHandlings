@@ -1,4 +1,4 @@
-package io.github.superbderrick.kotlinvideoplayer.AudioManager
+package io.github.superbderrick.kotlinvideoplayer.AudioPlayer
 
 interface PlayerAdapter{
     fun loadMedia(resourceId: Int?)

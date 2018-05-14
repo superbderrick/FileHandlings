@@ -10,9 +10,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import io.github.superbderrick.kotlinvideoplayer.AudioManager.MediaPlayerHolder
-import io.github.superbderrick.kotlinvideoplayer.AudioManager.PlaybackInfoListener
-import io.github.superbderrick.kotlinvideoplayer.AudioManager.PlayerAdapter
+import io.github.superbderrick.kotlinvideoplayer.AudioPlayer.MediaPlayerHolder
+import io.github.superbderrick.kotlinvideoplayer.AudioPlayer.PlaybackInfoListener
+import io.github.superbderrick.kotlinvideoplayer.AudioPlayer.PlayerAdapter
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.app_bar_navigation.*
 import android.widget.ScrollView

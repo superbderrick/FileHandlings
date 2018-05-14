@@ -1,4 +1,4 @@
-package io.github.superbderrick.kotlinvideoplayer.AudioManager
+package io.github.superbderrick.kotlinvideoplayer.AudioPlayer
 
 import android.content.Context
 import android.content.res.AssetFileDescriptor
