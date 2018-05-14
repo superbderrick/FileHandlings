@@ -10,27 +10,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import io.github.superbderrick.kotlinvideoplayer.AudioPlayer.MediaPlayerHolder
-import io.github.superbderrick.kotlinvideoplayer.AudioPlayer.PlaybackInfoListener
-import io.github.superbderrick.kotlinvideoplayer.AudioPlayer.PlayerAdapter
+import io.github.superbderrick.kotlinvideoplayer.AudioPlayer.AudioPlayerFragment
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.app_bar_navigation.*
-import android.widget.ScrollView
 
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
 
     private val LOG_TAG: String = "MainActivity"
-    //Locate Playback mp3 file
-    private val MEDIA_RES_ID: Int = R.raw.dfff
-
-    private lateinit var mTextDebug: TextView
-    private lateinit var mSeekbarAudio: SeekBar
-    private lateinit var mScrollContainer: ScrollView
-    private lateinit var mPlayerAdapter: PlayerAdapter
-    private var mUserIsSeeking: Boolean = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,91 +32,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        initializeUI()
-        initializeSeekbar()
-        initializePlaybackController()
         Log.d(LOG_TAG, "onCreate: finished")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        mPlayerAdapter.loadMedia(MEDIA_RES_ID)
-        Log.d(LOG_TAG, "onStart: create MediaPlayer")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        /*
-        [isChangingConfigurations]
-        Check to see whether this activity is in the process of being destroyed in order to be recreated with a new configuration.
-         */
-        if(isChangingConfigurations() && mPlayerAdapter.isPlaying()){
-            Log.d(LOG_TAG, "onStop: don't release MediaPlayer as screen is rotating & playing")
-        }else{
-            mPlayerAdapter.release()
-            Log.d(LOG_TAG, "onStop: release MediaPlayer")
-        }
-    }
-
-    fun initializeUI(){
-        mTextDebug = findViewById(R.id.text_debug)
-        val mPlayBtn: Button = findViewById(R.id.button_play)
-        val mPauseBtn: Button = findViewById(R.id.button_pause)
-        val mResetBtn: Button = findViewById(R.id.button_reset)
-        mSeekbarAudio = findViewById(R.id.seekbar_audio)
-        mScrollContainer = findViewById(R.id.scroll_container)
-
-        mPlayBtn.setOnClickListener(this)
-        mPauseBtn.setOnClickListener(this)
-        mResetBtn.setOnClickListener(this)
-    }
-
-    override fun onClick(view: View?) {
-        if(view != null){
-            when(view.id){
-                R.id.button_play -> {
-                    //Log.v(LOG_TAG, "play!!")
-                    mPlayerAdapter.play()
-                }
-                R.id.button_pause -> {
-                    //Log.v(LOG_TAG, "pause!!")
-                    mPlayerAdapter.pause()
-                }
-                R.id.button_reset -> {
-                    //Log.v(LOG_TAG, "reset!!")
-                    mPlayerAdapter.reset()
-                }
-            }
-        }
-    }
-
-    private fun initializePlaybackController(){
-        var mMediaPlayerHolder: MediaPlayerHolder = MediaPlayerHolder(this)
-        Log.d(LOG_TAG, "initializePlaybackController: created MediaPlayerHolder")
-        mMediaPlayerHolder.setPlaybackInfoListener(PlaybackListener())
-        mPlayerAdapter = mMediaPlayerHolder
-        Log.d(LOG_TAG, "initializePlaybackController: MediaPlayerHolder progress callback set")
-    }
-
-    private fun initializeSeekbar(){
-        mSeekbarAudio.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
-            var userSelectedPosition: Int = 0
-
-            override fun onStartTrackingTouch(seekBar: SeekBar){
-                mUserIsSeeking = true
-            }
-
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if(fromUser){
-                    userSelectedPosition = progress
-                }
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                mUserIsSeeking = false;
-                mPlayerAdapter.seekTo(userSelectedPosition)
-            }
-        })
     }
 
     override fun onBackPressed() {
@@ -166,48 +70,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(applicationContext, "exoPlayer", Toast.LENGTH_SHORT).show()
             }
             R.id.androidMediaPlayer_Audio -> {
-                Toast.makeText(applicationContext, "androidMediaPlayer_Audio", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(applicationContext, "androidMediaPlayer_Audio", Toast.LENGTH_SHORT).show()
+                supportFragmentManager.beginTransaction().replace(R.id.container, AudioPlayerFragment.newInstance()).commit()
             }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    inner class PlaybackListener: PlaybackInfoListener(){
-
-        override fun onLogUpdated(formattedMessage: String?) {
-            super.onLogUpdated(formattedMessage)
-            if(mTextDebug != null){
-                mTextDebug.append(formattedMessage)
-                mTextDebug.append("\n")
-                // Moves the scrollContainer focus to the end.
-                mScrollContainer.post { mScrollContainer.fullScroll(ScrollView.FOCUS_DOWN) }
-            }
-        }
-
-        override fun onDurationChanged(duration: Int) {
-            super.onDurationChanged(duration)
-            mSeekbarAudio.setMax(duration)
-            Log.d(LOG_TAG, String.format("setPlaybackDuration: setMax(%d)", duration))
-        }
-
-        override fun onPositionChanged(position: Int) {
-            super.onPositionChanged(position)
-            if (!mUserIsSeeking) {
-                mSeekbarAudio.setProgress(position, true);
-                Log.d(LOG_TAG, String.format("setPlaybackPosition: setProgress(%d)", position))
-            }
-        }
-
-        override fun onStateChanged(state: Int) {
-            super.onStateChanged(state)
-            var stateToString: String = PlaybackInfoListener.convertStateToString(state)
-            onLogUpdated(String.format("onStateChanged(%s)", stateToString))
-        }
-
-        override fun onPlaybackCompleted() {
-            super.onPlaybackCompleted()
-        }
     }
 }
