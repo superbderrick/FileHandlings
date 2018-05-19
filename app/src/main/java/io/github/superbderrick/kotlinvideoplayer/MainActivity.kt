@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.androidMediaPlayer_Video -> {
+
                 var i: Intent = Intent(this, VideoPlayerActivity::class.java)
                 startActivity(i)
             }
