@@ -45,16 +45,13 @@ class MediaPlayerHolder: PlayerAdapter{
     }
 
     private fun startUpdatingCallbackWithPosition(){
-        //if(mExecutor == null){
             mExecutor = Executors.newSingleThreadScheduledExecutor();
-        //}
-        //if(mSeekbarPositionUpdateTask == null){
+
             mSeekbarPositionUpdateTask = object: Runnable {
                 override fun run(){
                     //updateProgressCallbackTask();
                 }
             }
-        //}
         mExecutor.scheduleAtFixedRate(mSeekbarPositionUpdateTask, 0, PLAYBACK_POSITION_REFRESH_INTERVAL_MS, TimeUnit.MILLISECONDS)
     }
 

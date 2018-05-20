@@ -111,7 +111,6 @@ class AudioPlayerFragment: Fragment(), View.OnClickListener{
             if(mTextDebug != null){
                 mTextDebug.append(formattedMessage)
                 mTextDebug.append("\n")
-                // Moves the scrollContainer focus to the end.
                 mScrollContainer.post { mScrollContainer.fullScroll(ScrollView.FOCUS_DOWN) }
             }
         }
@@ -146,10 +145,7 @@ class AudioPlayerFragment: Fragment(), View.OnClickListener{
 
     override fun onStop() {
         super.onStop()
-        /*
-    [isChangingConfigurations]
-    Check to see whether this activity is in the process of being destroyed in order to be recreated with a new configuration.
-     */
+
         if(activity.isChangingConfigurations() && mPlayerAdapter.isPlaying()){
             Log.d(LOG_TAG, "onStop: don't release MediaPlayer as screen is rotating & playing")
         }else{
