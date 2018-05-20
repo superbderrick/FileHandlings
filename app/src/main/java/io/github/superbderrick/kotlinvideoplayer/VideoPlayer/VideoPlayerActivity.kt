@@ -17,7 +17,7 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
     private var mUserSelectedPosition: Int = 0
     private var mUserIsSeeking: Boolean = false
 
-    private val mVideoPath: String = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+    private val mVideoPath: String = "http://cdn-fms.rbs.com.br/vod/hls_sample1_manifest.m3u8"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +39,7 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
 
     override fun surfaceCreated(surfaceHolder: SurfaceHolder?) {
         mVideoController = VideoController()
-        mVideoController.openVideo(mVideoPath, surfaceHolder)
-        mSeekbarVideo.max = mVideoController.durationVideo()
+        mVideoController.openVideo(mVideoPath, surfaceHolder, mSeekbarVideo)
     }
 
     override fun surfaceChanged(p0: SurfaceHolder?, p1: Int, p2: Int, p3: Int) {
