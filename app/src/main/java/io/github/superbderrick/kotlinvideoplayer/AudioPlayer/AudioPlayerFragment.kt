@@ -101,8 +101,10 @@ class AudioPlayerFragment: Fragment(), View.OnClickListener{
     private fun initializePlaybackController(){
         var mMediaPlayerHolder: MediaPlayerHolder = MediaPlayerHolder(activity)
         Log.d(LOG_TAG, "initializePlaybackController: created MediaPlayerHolder")
+
         mMediaPlayerHolder.setPlaybackInfoListener(PlaybackListener())
         mPlayerAdapter = mMediaPlayerHolder
+
         Log.d(LOG_TAG, "initializePlaybackController: MediaPlayerHolder progress callback set")
     }
 

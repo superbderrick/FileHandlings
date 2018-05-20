@@ -1,5 +1,6 @@
 package io.github.superbderrick.kotlinvideoplayer
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -11,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import io.github.superbderrick.kotlinvideoplayer.AudioPlayer.AudioPlayerFragment
+import io.github.superbderrick.kotlinvideoplayer.VideoPlayer.VideoPlayerActivity
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.app_bar_navigation.*
 
@@ -63,8 +65,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.androidMediaPlayer_Video -> {
-                // Handle the camera action
-                Toast.makeText(applicationContext, "androidMediaPlayer_Video", Toast.LENGTH_SHORT).show()
+
+                var i: Intent = Intent(this, VideoPlayerActivity::class.java)
+                startActivity(i)
             }
             R.id.exoPlayer -> {
                 Toast.makeText(applicationContext, "exoPlayer", Toast.LENGTH_SHORT).show()
