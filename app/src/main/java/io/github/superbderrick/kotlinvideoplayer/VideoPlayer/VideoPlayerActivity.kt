@@ -102,7 +102,13 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
                 }
 
                 R.id.play_btn -> {
-
+                    if(mVideoController.getVideoStatus() == true){
+                        mPlayBtn.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp)
+                        mVideoController.pauseVideo()
+                    }else{
+                        mPlayBtn.setBackgroundResource(R.drawable.ic_pause_circle_outline_black_24dp)
+                        mVideoController.startVideo()
+                    }
                 }
 
                 R.id.forward_btn -> {

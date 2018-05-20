@@ -88,6 +88,10 @@ class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPrepared
         return mMediaPlayer.duration
     }
 
+    public fun getVideoStatus(): Boolean{
+        return mMediaPlayer.isPlaying
+    }
+
     private fun startUpdatingCallbackWithPosition(){
         mExecutor = Executors.newSingleThreadScheduledExecutor()
         mSeekbarPositionUpdateTask = object : Runnable{
