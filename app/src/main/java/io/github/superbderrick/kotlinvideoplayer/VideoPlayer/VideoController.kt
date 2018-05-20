@@ -92,6 +92,14 @@ class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPrepared
         return mMediaPlayer.isPlaying
     }
 
+    public fun seekForwardVideo(){
+        mMediaPlayer.seekTo(mMediaPlayer.currentPosition + 10000)
+    }
+
+    public fun seekBackwardVideo(){
+        mMediaPlayer.seekTo(mMediaPlayer.currentPosition - 10000)
+    }
+
     private fun startUpdatingCallbackWithPosition(){
         mExecutor = Executors.newSingleThreadScheduledExecutor()
         mSeekbarPositionUpdateTask = object : Runnable{

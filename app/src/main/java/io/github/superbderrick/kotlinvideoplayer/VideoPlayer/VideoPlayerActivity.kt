@@ -98,7 +98,7 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
                 }
 
                 R.id.backward_btn -> {
-
+                    mVideoController.seekBackwardVideo()
                 }
 
                 R.id.play_btn -> {
@@ -112,7 +112,7 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
                 }
 
                 R.id.forward_btn -> {
-
+                    mVideoController.seekForwardVideo()
                 }
             }
         }
