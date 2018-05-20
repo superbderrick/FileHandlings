@@ -2,13 +2,19 @@ package io.github.superbderrick.kotlinvideoplayer.VideoPlayer
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.SeekBar
+import android.widget.Toast
 import io.github.superbderrick.kotlinvideoplayer.R
 
 class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHolder.Callback, SeekBar.OnSeekBarChangeListener{
+
+    private val LOG_TAG = "VideoPlayerActivity"
 
     private lateinit var mSurfaceView: SurfaceView
     private lateinit var mSurfaceHolder: SurfaceHolder
@@ -17,7 +23,12 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
     private var mUserSelectedPosition: Int = 0
     private var mUserIsSeeking: Boolean = false
 
-    private val mVideoPath: String = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+    private lateinit var mVideoControllerView: LinearLayout
+    private lateinit var mBackwardBtn: ImageButton
+    private lateinit var mPlayBtn: ImageButton
+    private lateinit var mForwardBtn: ImageButton
+
+    private val mVideoPath: String = "http://cdn-fms.rbs.com.br/vod/hls_sample1_manifest.m3u8"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +46,21 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
     private fun setUIComponents(){
         mSurfaceView = findViewById(R.id.surfaceview)
         mSeekbarVideo = findViewById(R.id.seekbar_video)
+
+        mVideoControllerView = findViewById(R.id.videoController_view)
+
+        mBackwardBtn = findViewById(R.id.backward_btn)
+        mPlayBtn = findViewById(R.id.play_btn)
+        mForwardBtn = findViewById(R.id.forward_btn)
+
+        mBackwardBtn.setOnClickListener(this)
+        mPlayBtn.setOnClickListener(this)
+        mForwardBtn.setOnClickListener(this)
     }
 
     override fun surfaceCreated(surfaceHolder: SurfaceHolder?) {
         mVideoController = VideoController()
-        mVideoController.openVideo(mVideoPath, surfaceHolder)
-        mSeekbarVideo.max = mVideoController.durationVideo()
+        mVideoController.openVideo(mVideoPath, surfaceHolder, mSeekbarVideo)
     }
 
     override fun surfaceChanged(p0: SurfaceHolder?, p1: Int, p2: Int, p3: Int) {
@@ -74,7 +94,25 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
         if(view != null){
             when(view.id){
                 R.id.surfaceview -> {
-                    mVideoController.handleVideo()
+                    mVideoController.handleVideo(mVideoControllerView)
+                }
+
+                R.id.backward_btn -> {
+                    mVideoController.seekBackwardVideo()
+                }
+
+                R.id.play_btn -> {
+                    if(mVideoController.getVideoStatus() == true){
+                        mPlayBtn.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp)
+                        mVideoController.pauseVideo()
+                    }else{
+                        mPlayBtn.setBackgroundResource(R.drawable.ic_pause_circle_outline_black_24dp)
+                        mVideoController.startVideo()
+                    }
+                }
+
+                R.id.forward_btn -> {
+                    mVideoController.seekForwardVideo()
                 }
             }
         }

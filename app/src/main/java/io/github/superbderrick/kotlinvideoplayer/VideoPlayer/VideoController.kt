@@ -2,18 +2,32 @@ package io.github.superbderrick.kotlinvideoplayer.VideoPlayer
 
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.util.Log
 import android.view.SurfaceHolder
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.SeekBar
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 
 class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener{
 
+    private val LOG_TAG : String = "VideoController"
+
+    private val PLAYBACK_POSITION_REFRESH_INTERVAL_MS: Long = 1000
+
     private lateinit var mMediaPlayer: MediaPlayer
+    private lateinit var mSeekBar: SeekBar
+
+    private lateinit var mExecutor: ScheduledExecutorService
+    private lateinit var mSeekbarPositionUpdateTask: Runnable
 
     constructor(){
 
     }
 
-    public fun openVideo(aVideoPath: String, aSurfaceHolder: SurfaceHolder?){
+    public fun openVideo(aVideoPath: String, aSurfaceHolder: SurfaceHolder?, aSeekbar: SeekBar){
         try{
             mMediaPlayer = MediaPlayer()
 
@@ -24,16 +38,18 @@ class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPrepared
             mMediaPlayer.setOnPreparedListener(this)
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
             mMediaPlayer.prepare()
+
+            mSeekBar = aSeekbar
         }catch (e: Exception){
             e.printStackTrace()
         }
     }
 
-    public fun handleVideo(){
-        if(mMediaPlayer.isPlaying() == true){
-            pauseVideo()
+    public fun handleVideo(videocontrolview : LinearLayout){
+        if(videocontrolview.visibility == View.VISIBLE){
+            videocontrolview.visibility = View.INVISIBLE
         }else{
-            startVideo()
+            videocontrolview.visibility = View.VISIBLE
         }
     }
 
@@ -41,6 +57,7 @@ class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPrepared
         if(mMediaPlayer == null){
             return
         }
+        startUpdatingCallbackWithPosition()
         mMediaPlayer.start()
     }
 
@@ -71,16 +88,47 @@ class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPrepared
         return mMediaPlayer.duration
     }
 
-    override fun onCompletion(mediaPlayer: MediaPlayer?) {
-        if(mediaPlayer != null){
-            mediaPlayer.stop()
-            mediaPlayer.release()
-        }
+    public fun getVideoStatus(): Boolean{
+        return mMediaPlayer.isPlaying
     }
 
+    public fun seekForwardVideo(){
+        mMediaPlayer.seekTo(mMediaPlayer.currentPosition + 10000)
+    }
+
+    public fun seekBackwardVideo(){
+        mMediaPlayer.seekTo(mMediaPlayer.currentPosition - 10000)
+    }
+
+    private fun startUpdatingCallbackWithPosition(){
+        mExecutor = Executors.newSingleThreadScheduledExecutor()
+        mSeekbarPositionUpdateTask = object : Runnable{
+            override fun run(){
+                mSeekBar.setProgress(mMediaPlayer.currentPosition)
+            }
+        }
+        mExecutor.scheduleAtFixedRate(mSeekbarPositionUpdateTask, 0, PLAYBACK_POSITION_REFRESH_INTERVAL_MS, TimeUnit.MILLISECONDS)
+    }
+
+    /*
+    MediaPlayer.OnPreparedListener
+     */
     override fun onPrepared(mediaPlayer: MediaPlayer?) {
+        mSeekBar.max = durationVideo()
+
         if(mediaPlayer != null){
-            mediaPlayer.start()
+            startVideo()
         }
     }
+    //MediaPlayer.OnPreparedListener
+
+    /*
+    MediaPlayer.OnCompletionListener
+     */
+    override fun onCompletion(mediaPlayer: MediaPlayer?) {
+        if(mediaPlayer != null){
+            releaseVideo()
+        }
+    }
+    //MediaPlayer.OnCompletionListener
 }
