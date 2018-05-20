@@ -8,14 +8,16 @@
         android:id="@+id/scroll_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
+        android:layout_margin="80dp"
         android:layout_weight="1">
 
         <TextView
+            android:background="@color/colorYellow"
             android:id="@+id/text_debug"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
+            android:textStyle="bold"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     </ScrollView>
