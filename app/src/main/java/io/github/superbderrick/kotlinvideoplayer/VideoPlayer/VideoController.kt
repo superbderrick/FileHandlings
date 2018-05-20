@@ -51,6 +51,12 @@ class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPrepared
         mMediaPlayer.pause()
     }
 
+    public fun releaseVideo(){
+        if(mMediaPlayer == null){
+            return
+        }
+        mMediaPlayer.release()
+    }
     public fun seekVideo(position: Int){
         if(mMediaPlayer == null){
             return

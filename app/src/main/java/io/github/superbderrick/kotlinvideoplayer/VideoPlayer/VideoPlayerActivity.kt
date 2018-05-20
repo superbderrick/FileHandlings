@@ -30,8 +30,6 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
 
         mSurfaceHolder = mSurfaceView.holder
         mSurfaceHolder.addCallback(this)
-
-
     }
 
     private fun setUIComponents(){
@@ -80,5 +78,15 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mVideoController.releaseVideo()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mVideoController.pauseVideo()
     }
 }
