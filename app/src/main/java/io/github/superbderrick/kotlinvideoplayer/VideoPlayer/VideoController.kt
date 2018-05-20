@@ -3,6 +3,7 @@ package io.github.superbderrick.kotlinvideoplayer.VideoPlayer
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.view.SurfaceHolder
+import android.widget.SeekBar
 
 class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener{
 
@@ -48,6 +49,20 @@ class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPrepared
             return
         }
         mMediaPlayer.pause()
+    }
+
+    public fun seekVideo(position: Int){
+        if(mMediaPlayer == null){
+            return
+        }
+        mMediaPlayer.seekTo(position)
+    }
+
+    public fun durationVideo(): Int{
+        if(mMediaPlayer == null){
+            return 0
+        }
+        return mMediaPlayer.duration
     }
 
     override fun onCompletion(mediaPlayer: MediaPlayer?) {
