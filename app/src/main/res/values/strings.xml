@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">KotlinVideoPlayer</string>
-    <string name="title_activity_navigation">KotlinVideoPlayerSample</string>
+    <string name="title_activity_navigation">MultiMedia Samples </string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

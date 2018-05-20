@@ -23,7 +23,6 @@ class MediaPlayerHolder: PlayerAdapter{
     }
 
     private fun initializeMediaPlayer(){
-        //if(mMediaPlayer == null){
             mMediaPlayer = MediaPlayer()
             (mMediaPlayer as MediaPlayer).setOnCompletionListener(object: MediaPlayer.OnCompletionListener{
                 override fun onCompletion(mediaPlayer: MediaPlayer?) {
@@ -36,7 +35,6 @@ class MediaPlayerHolder: PlayerAdapter{
                 }
             })
             logToUI("mMediaPlayer = new MediaPlayer()")
-        //}
     }
 
     fun setPlaybackInfoListener(listener: PlaybackInfoListener){
@@ -60,14 +58,11 @@ class MediaPlayerHolder: PlayerAdapter{
         mExecutor.scheduleAtFixedRate(mSeekbarPositionUpdateTask, 0, PLAYBACK_POSITION_REFRESH_INTERVAL_MS, TimeUnit.MILLISECONDS)
     }
 
-    // Reports media playback position to mPlaybackProgressCallback.
     private fun stopUpdatingCallbackWithPosition(resetUIPlaybackPosition: Boolean){
-        //if(mExecutor != null){
             mExecutor.shutdown()
             if (resetUIPlaybackPosition && mPlaybackInfoListener != null) {
                 mPlaybackInfoListener.onPositionChanged(0);
             }
-        //}
     }
 
     override fun loadMedia(resourceId: Int?) {
