@@ -11,13 +11,46 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <SeekBar
-            android:id="@+id/seekbar_video"
+        <LinearLayout
+            android:id="@+id/videoController_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="32dp"
-            android:layout_marginTop="16dp"
-            android:layout_alignParentBottom="true"/>
+            android:layout_marginTop="16dp">
+            <SeekBar
+                android:id="@+id/seekbar_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/backward_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_chevron_left_black_24dp"
+                    android:padding="32dp"/>
+                <ImageButton
+                    android:id="@+id/play_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_play_arrow_black_24dp"
+                    android:padding="32dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"/>
+                <ImageButton
+                    android:id="@+id/forward_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_chevron_right_black_24dp"
+                    android:padding="32dp"/>
+            </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 
 </FrameLayout>

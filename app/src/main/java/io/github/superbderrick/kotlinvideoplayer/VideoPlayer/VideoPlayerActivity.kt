@@ -2,13 +2,19 @@ package io.github.superbderrick.kotlinvideoplayer.VideoPlayer
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.SeekBar
+import android.widget.Toast
 import io.github.superbderrick.kotlinvideoplayer.R
 
 class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHolder.Callback, SeekBar.OnSeekBarChangeListener{
+
+    private val LOG_TAG = "VideoPlayerActivity"
 
     private lateinit var mSurfaceView: SurfaceView
     private lateinit var mSurfaceHolder: SurfaceHolder
@@ -16,6 +22,11 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
     private lateinit var mSeekbarVideo: SeekBar
     private var mUserSelectedPosition: Int = 0
     private var mUserIsSeeking: Boolean = false
+
+    private lateinit var mVideoControllerView: LinearLayout
+    private lateinit var mBackwardBtn: ImageButton
+    private lateinit var mPlayBtn: ImageButton
+    private lateinit var mForwardBtn: ImageButton
 
     private val mVideoPath: String = "http://cdn-fms.rbs.com.br/vod/hls_sample1_manifest.m3u8"
 
@@ -35,6 +46,16 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
     private fun setUIComponents(){
         mSurfaceView = findViewById(R.id.surfaceview)
         mSeekbarVideo = findViewById(R.id.seekbar_video)
+
+        mVideoControllerView = findViewById(R.id.videoController_view)
+
+        mBackwardBtn = findViewById(R.id.backward_btn)
+        mPlayBtn = findViewById(R.id.play_btn)
+        mForwardBtn = findViewById(R.id.forward_btn)
+
+        mBackwardBtn.setOnClickListener(this)
+        mPlayBtn.setOnClickListener(this)
+        mForwardBtn.setOnClickListener(this)
     }
 
     override fun surfaceCreated(surfaceHolder: SurfaceHolder?) {
@@ -74,6 +95,18 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
             when(view.id){
                 R.id.surfaceview -> {
                     mVideoController.handleVideo()
+                }
+
+                R.id.backward_btn -> {
+
+                }
+
+                R.id.play_btn -> {
+
+                }
+
+                R.id.forward_btn -> {
+
                 }
             }
         }
