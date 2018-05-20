@@ -94,7 +94,7 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
         if(view != null){
             when(view.id){
                 R.id.surfaceview -> {
-                    mVideoController.handleVideo()
+                    mVideoController.handleVideo(mVideoControllerView)
                 }
 
                 R.id.backward_btn -> {
