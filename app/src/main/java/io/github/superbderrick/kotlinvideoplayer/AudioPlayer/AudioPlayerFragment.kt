@@ -18,11 +18,11 @@ import io.github.superbderrick.kotlinvideoplayer.R
 class AudioPlayerFragment: Fragment(), View.OnClickListener{
 
     private val LOG_TAG: String = "AudioPlayerFragment"
-    //Locate Playback mp3 file
+
     private val MEDIA_RES_ID: Int = R.raw.dfff
 
     private lateinit var mTextDebug: TextView
-    private lateinit var mSeekbarAudio: SeekBar
+    private lateinit var mAudioSeekbar: SeekBar
     private lateinit var mScrollContainer: ScrollView
     private lateinit var mPlayerAdapter: PlayerAdapter
     private var mUserIsSeeking: Boolean = false
@@ -38,18 +38,19 @@ class AudioPlayerFragment: Fragment(), View.OnClickListener{
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initializeUI(view)
         initializeSeekbar()
         initializePlaybackController()
     }
 
-    fun initializeUI(v: View?){
+    private fun initializeUI(v: View?){
         if(v != null){
             mTextDebug = v.findViewById(R.id.text_debug)
             mPlayBtn = v.findViewById(R.id.button_play)
             mPauseBtn = v.findViewById(R.id.button_pause)
             mResetBtn = v.findViewById(R.id.button_reset)
-            mSeekbarAudio = v.findViewById(R.id.seekbar_audio)
+            mAudioSeekbar = v.findViewById(R.id.seekbar_audio)
             mScrollContainer = v.findViewById(R.id.scroll_container)
         }
 
@@ -62,15 +63,12 @@ class AudioPlayerFragment: Fragment(), View.OnClickListener{
         if(view != null){
             when(view.id){
                 R.id.button_play -> {
-                    //Log.v(LOG_TAG, "play!!")
                     mPlayerAdapter.play()
                 }
                 R.id.button_pause -> {
-                    //Log.v(LOG_TAG, "pause!!")
                     mPlayerAdapter.pause()
                 }
                 R.id.button_reset -> {
-                    //Log.v(LOG_TAG, "reset!!")
                     mPlayerAdapter.reset()
                 }
             }
@@ -78,7 +76,7 @@ class AudioPlayerFragment: Fragment(), View.OnClickListener{
     }
 
     private fun initializeSeekbar(){
-        mSeekbarAudio.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+        mAudioSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             var userSelectedPosition: Int = 0
 
             override fun onStartTrackingTouch(seekBar: SeekBar){
@@ -120,15 +118,13 @@ class AudioPlayerFragment: Fragment(), View.OnClickListener{
 
         override fun onDurationChanged(duration: Int) {
             super.onDurationChanged(duration)
-            mSeekbarAudio.setMax(duration)
-            Log.d(LOG_TAG, String.format("setPlaybackDuration: setMax(%d)", duration))
+            mAudioSeekbar.setMax(duration)
         }
 
         override fun onPositionChanged(position: Int) {
             super.onPositionChanged(position)
             if (!mUserIsSeeking) {
-                mSeekbarAudio.setProgress(position, true);
-                Log.d(LOG_TAG, String.format("setPlaybackPosition: setProgress(%d)", position))
+                mAudioSeekbar.setProgress(position)
             }
         }
 

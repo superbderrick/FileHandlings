@@ -11,12 +11,14 @@ import java.util.concurrent.TimeUnit
 class MediaPlayerHolder: PlayerAdapter{
 
     private val PLAYBACK_POSITION_REFRESH_INTERVAL_MS: Long = 1000
+
     private lateinit var mContext: Context
     private lateinit var mMediaPlayer: MediaPlayer
-    private var mResourceId: Int = 0
     private lateinit var mPlaybackInfoListener: PlaybackInfoListener
     private lateinit var mExecutor: ScheduledExecutorService
     private lateinit var mSeekbarPositionUpdateTask: Runnable
+
+    private var mResourceId: Int = 0
 
     constructor(context: Context){
         mContext = context.applicationContext
@@ -34,6 +36,7 @@ class MediaPlayerHolder: PlayerAdapter{
                     }
                 }
             })
+
             logToUI("mMediaPlayer = new MediaPlayer()")
     }
 
@@ -41,9 +44,6 @@ class MediaPlayerHolder: PlayerAdapter{
         mPlaybackInfoListener = listener
     }
 
-    /**
-     * Syncs the mMediaPlayer position with mPlaybackProgressCallback via recurring task.
-     */
     private fun startUpdatingCallbackWithPosition(){
         //if(mExecutor == null){
             mExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -74,8 +74,8 @@ class MediaPlayerHolder: PlayerAdapter{
 
         try {
             logToUI("load() {1. setDataSource}")
-
-            mMediaPlayer.setDataSource(assetFileDescriptor)
+            mMediaPlayer.setDataSource(assetFileDescriptor.fileDescriptor , assetFileDescriptor.startOffset ,assetFileDescriptor.length)
+            assetFileDescriptor.close()
 
         }catch (e: Exception){
             logToUI(e.toString());

@@ -12,7 +12,6 @@ public abstract class PlaybackInfoListener {
     //@Retention(): Range of Annotation
     @Retention(RetentionPolicy.SOURCE)
     @interface State {
-
         int INVALID = -1;
         int PLAYING = 0;
         int PAUSED = 1;
