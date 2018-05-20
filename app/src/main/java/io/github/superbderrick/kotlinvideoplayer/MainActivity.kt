@@ -41,10 +41,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
-        //Go to each sample.
+        //Go to Each sample
         when (item.itemId) {
             R.id.androidMediaPlayer_Video -> {
 
