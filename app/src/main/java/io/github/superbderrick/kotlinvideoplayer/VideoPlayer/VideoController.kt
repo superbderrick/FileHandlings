@@ -11,7 +11,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
-class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener{
+class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnInfoListener{
 
     private val LOG_TAG : String = "VideoController"
 
@@ -36,6 +36,7 @@ class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPrepared
 
             mMediaPlayer.setOnCompletionListener(this)
             mMediaPlayer.setOnPreparedListener(this)
+            mMediaPlayer.setOnInfoListener(this)
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
             mMediaPlayer.prepare()
 
@@ -131,4 +132,20 @@ class VideoController : MediaPlayer.OnCompletionListener, MediaPlayer.OnPrepared
         }
     }
     //MediaPlayer.OnCompletionListener
+
+    /*
+    MediaPlayer.OnInfoListener
+     */
+    override fun onInfo(p0: MediaPlayer?, what: Int, p2: Int): Boolean {
+        when(what){
+            MediaPlayer.MEDIA_INFO_BUFFERING_START -> {
+                Log.v(LOG_TAG, "Buffering Start");
+            }
+            MediaPlayer.MEDIA_INFO_BUFFERING_END -> {
+                Log.v(LOG_TAG, "Buffering End");
+            }
+        }
+        return true
+    }
+    //MediaPlayer.OnInfoListener
 }
