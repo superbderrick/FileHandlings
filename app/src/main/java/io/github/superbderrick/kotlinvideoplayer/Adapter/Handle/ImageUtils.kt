@@ -13,7 +13,7 @@ import android.provider.MediaStore
 import io.github.superbderrick.kotlinvideoplayer.Data.MediaData
 import io.github.superbderrick.kotlinvideoplayer.R
 
-class ImageUtils{
+object ImageUtils{
     fun getVideoThumbnail(aMediaData: MediaData) : Bitmap{
         var context: Context? = null
         var thumbnailCR: ContentResolver? = null

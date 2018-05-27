@@ -19,6 +19,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import io.github.superbderrick.kotlinvideoplayer.AudioPlayer.AudioPlayerFragment
+import io.github.superbderrick.kotlinvideoplayer.Fragment.VideoGridFragment
 import io.github.superbderrick.kotlinvideoplayer.VideoPlayer.VideoPlayerActivity
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.app_bar_navigation.*
@@ -82,9 +83,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun immediatePlaybackVideoFunction(){
+    private fun showVideoList(){
+        /*
         var intent: Intent = Intent(this, VideoPlayerActivity::class.java)
         startActivity(intent)
+        */
+        supportFragmentManager.beginTransaction().replace(R.id.container, VideoGridFragment.newInstance()).commit()
+
+        supportActionBar?.hide()
     }
 
     //Runtime Permission
@@ -105,10 +111,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),STORAGE_PERMISSION_CODE)
                 }
             }else{  //These App already has permission
-
+                showVideoList()
             }
         }else{  //Lower Android Version, don't need permission
-
+            showVideoList()
         }
     }
 
@@ -118,7 +124,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             STORAGE_PERMISSION_CODE -> {
                 //User accept the permission
                 if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    immediatePlaybackVideoFunction()
+                    showVideoList()
                 }
                 else{   //User don't accept the permission
                     Snackbar.make(mView, "These Permission is necessary If u want, Click Again", Snackbar.LENGTH_LONG)
