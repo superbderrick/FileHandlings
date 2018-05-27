@@ -37,7 +37,7 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
 
         var intent: Intent = getIntent()
         mVideoPath = intent.getStringExtra("VIDEO_PATH")
-        
+
         setUIComponents();
 
         mSurfaceView.setOnClickListener(this)

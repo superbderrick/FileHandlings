@@ -7,7 +7,8 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class ImageLoader{
-    val D_RES_ID: Int = R.drawable.default_video_image
+    val D_RES_ID: Int = R.drawable.default_video
+
     lateinit var mExecutor: ExecutorService
     lateinit var mImageViewMap: HashMap<ImageView?, String>
 
