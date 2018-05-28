@@ -1,5 +1,6 @@
 package io.github.superbderrick.kotlinvideoplayer.VideoPlayer
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -28,11 +29,14 @@ class VideoPlayerActivity : AppCompatActivity(), View.OnClickListener, SurfaceHo
     private lateinit var mPlayBtn: ImageButton
     private lateinit var mForwardBtn: ImageButton
 
-    private val mVideoPath: String = "http://cdn-fms.rbs.com.br/vod/hls_sample1_manifest.m3u8"
+    private var mVideoPath: String = "http://cdn-fms.rbs.com.br/vod/hls_sample1_manifest.m3u8"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_playback)
+
+        var intent: Intent = getIntent()
+        mVideoPath = intent.getStringExtra("VIDEO_PATH")
 
         setUIComponents();
 
